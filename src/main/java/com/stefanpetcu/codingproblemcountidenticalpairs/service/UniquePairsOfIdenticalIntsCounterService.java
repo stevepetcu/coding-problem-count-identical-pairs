@@ -4,11 +4,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class UniquePairsOfIdenticalIntsCounterService {
-    private static final int MAX_SUPPORTED_NUMBER_OF_PAIRS_COUNT = 1_000_000_000;
-    // Any list of identical ints that's got more than IDENTICAL_INTS_LIST_UPPER_SIZE_THRESHOLD elements
-    // will have over MAX_SUPPORTED_NUMBER_OF_PAIRS_COUNT pairs. We can return early without parsing the
+    // Any list of identical ints that's got more than MAX_COUNT_IDENTICAL_INTS elements
+    // will have > MAX_COUNT_NUMBER_OF_PAIRS pairs. We can return early w/o parsing the
     // remaining inputs or even calculating the number of pairs. Cheats!
-    private static final int IDENTICAL_INTS_LIST_UPPER_SIZE_THRESHOLD = 44721;
+    private static final int MAX_COUNT_IDENTICAL_INTS = 44721;
+    private static final int MAX_COUNT_NUMBER_OF_PAIRS = 1_000_000_000;
+
     public int count(int[] arr) {
         Arrays.sort(arr);
 
@@ -22,14 +23,14 @@ public class UniquePairsOfIdenticalIntsCounterService {
                 if (arr[i] == identicalIntsList.get(0)) {
                     identicalIntsList.add(arr[i]);
                 }
-                if (identicalIntsList.size() > IDENTICAL_INTS_LIST_UPPER_SIZE_THRESHOLD) {
-                    return MAX_SUPPORTED_NUMBER_OF_PAIRS_COUNT;
+                if (identicalIntsList.size() > MAX_COUNT_IDENTICAL_INTS) {
+                    return MAX_COUNT_NUMBER_OF_PAIRS;
                 }
                 if (arr[i] != identicalIntsList.get(0) || i == arr.length - 1) {
                     pairCount += calculateCombinations(identicalIntsList);
 
-                    if (pairCount >= MAX_SUPPORTED_NUMBER_OF_PAIRS_COUNT) {
-                        return MAX_SUPPORTED_NUMBER_OF_PAIRS_COUNT;
+                    if (pairCount >= MAX_COUNT_NUMBER_OF_PAIRS) {
+                        return MAX_COUNT_NUMBER_OF_PAIRS;
                     }
 
                     identicalIntsList.clear();
